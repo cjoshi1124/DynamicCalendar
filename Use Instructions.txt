@@ -1,0 +1,44 @@
+START PROCEDURE (testing)
+
+docker compose up -d database
+docker compose up --build frontend notifier
+Navigate to: http://localhost:5000
+Inspect Database after Test: docker compose exec database psql -U test_user -d project1
+SELECT * FROM Contacts WHERE email = '<input_email>';
+SELECT * FROM Requests WHERE contact_id = 1;
+
+Staff Role: 
+- admin
+- password123
+
+
+TEST PROCEDURE
+**** NOTE: Must manually go back to 10.3.94.7:5000 to go back to main page! ****
+Navigate to: http://10.3.94.7:5000
+Check the already scheduled appointments, request an appointment, or log in as staff.
+For trying to schedule an appointment, the fields entered must follow specific rules 
+- line of 10 numbers for phone number, email must have "@" and "." present, etc.
+Login as staff: 
+- admin, password123
+
+
+Inspect Database after Test: (ssh test@10.3.94.7     password = password)
+docker compose exec database psql -U test_user -d project1
+SELECT * FROM Contacts WHERE email = '<input_email>';
+SELECT * FROM Requests;
+
+
+
+Staff Role: 
+- admin
+- password123
+
+IN THE CALENDAR: 
+- You can login (Only staff roles can access the next page)
+- You can request and appointment
+
+NOTIFIER
+- The scheduler will send a notification to the staff member once a request is created; (Only my email at this point)
+
+SCHEDULER (Not implemented)
+- It will (eventually) send reminders of the appointments to clients.
